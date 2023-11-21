@@ -1,0 +1,2 @@
+thieving=0
+combat=0
