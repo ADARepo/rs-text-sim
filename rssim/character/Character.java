@@ -2,6 +2,8 @@ package rssim.character;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.StringBuilder;
 import java.util.Scanner;
 import java.util.Hashtable;
@@ -28,13 +30,14 @@ public class Character
         {
             expLevelVal = new Hashtable<>();
 
+            // Could be edited to take in the path to the directories if changed or just immediately writing in the absolute path.
             File statFile = new File(System.getProperty("user.dir") + "/rssim/character/stats.txt");
             File levelFile = new File(System.getProperty("user.dir") + "/rssim/levels.txt");
 
             Scanner scStat = new Scanner(statFile);
             Scanner scLevel = new Scanner(levelFile);
 
-            // read stats of character first, flag = 0 then levels and exp is flag = 1.
+            // read in level/experience values (flag = 0) then character stats (flag = 1)
             readValues(0, scLevel);
             readValues(1, scStat);
 
@@ -42,12 +45,10 @@ public class Character
         {
             e.printStackTrace();
             this.validCharacter = false;
-            return;
         } catch (NumberFormatException e)
         {
             e.printStackTrace();
             this.validCharacter = false;
-            return;
         }
     }
 
@@ -96,5 +97,72 @@ public class Character
             rhs.setLength(0);
         }
         sc.close();
+    }
+
+    // adds gained thieving exp to this objects thievingExp field.
+    // returns true if leveled up, false if not.
+    public boolean addThievingExp(int expAdded)
+    {
+        // adds to the current exp then calculates if a new level has been gained.
+        this.thievingExp = this.thievingExp + expAdded;
+
+        // Get current level and add one. if less than 99, check if it meets or exceeds
+        // ...current level + 1's exp. Do this by grabbing the exp value for the next level.
+        int nextLevel = thievingLevel + 1;
+
+        if (nextLevel <= 99)
+        {
+            int nextExp = expLevelVal.get(nextLevel);
+            if (this.thievingExp >= nextExp) 
+            {
+                this.thievingLevel++;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void editSavedExp()
+    {
+        // Open stats.txt, WRITE to file and update all experience values.
+        File statFile = new File(System.getProperty("user.dir") + "/rssim/character/stats.txt");
+
+        // must initialize (even to null) so we can attempt to close the file even if we don't successfully open it.
+        FileWriter fw = null;
+        try
+        {
+            // Create data to be saved to file.
+            String formattedData = formatData();
+
+            fw = new FileWriter(statFile);
+            fw.write(formattedData);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                fw.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private String formatData()
+    {
+        StringBuilder ret = new StringBuilder();
+
+        // Editing each skill's saved experience values.
+        ret.append("thieving=" + thievingExp + '\n');
+        ret.append("combat=" + combatExp + '\n');
+
+        return ret.toString();
     }
 }
