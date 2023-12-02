@@ -1,6 +1,7 @@
 package rssim.npc.targets;
 
-abstract class Targets 
+// Generic class for a pickpocketable npc
+public abstract class Targets 
 {
     public int thievingReq;// minimum thieving level necessary to pickpocket this npc
     public int thievingExp; // exp awarded for successful pickpocket
@@ -16,8 +17,8 @@ abstract class Targets
     }
 
     // was their thieving level high enough to steal from this target and succeed?
-    public boolean didICatchYou(int charThievingLvl)
-    {
-        // generic formula for all pickpockets.
-    }
+    // public boolean didICatchYou(int charThievingLvl)
+    // {
+    //     // generic formula for all pickpockets.
+    // }
 }
