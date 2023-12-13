@@ -32,14 +32,14 @@ public class Character
 
             // Could be edited to take in the path to the directories if changed or just immediately writing in the absolute path.
             File statFile = new File(System.getProperty("user.dir") + "/rssim/character/stats.txt");
-            File levelFile = new File(System.getProperty("user.dir") + "/rssim/levels.txt");
+            File levelFile = new File(System.getProperty("user.dir") + "/rssim/scripts/levels.txt");
 
             Scanner scStat = new Scanner(statFile);
             Scanner scLevel = new Scanner(levelFile);
 
             // read in level/experience values (flag = 0) then character stats (flag = 1)
-            readValues(0, scLevel);
-            readValues(1, scStat);
+            this.readValues(0, scLevel);
+            this.readValues(1, scStat);
 
         } catch (FileNotFoundException e)
         {

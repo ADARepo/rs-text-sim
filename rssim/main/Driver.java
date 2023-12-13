@@ -23,10 +23,10 @@ public class Driver
 
         Thug thug = null;
 
-        // generate option 1.
+        // generate option 1. exp is static for now.
         if (thievingLevel > 0)
         {
-            thug = new Thug(1, character.thievingExp, "Thug");
+            thug = new Thug(1, 10, "Thug");
         }
 
         try
@@ -40,7 +40,8 @@ public class Driver
                 // option 1 picked, handle the Thug pickpocket.
                 if (thug != null && getOption == 1)
                 {
-                    
+                    character.addThievingExp(thug.thievingExp);
+                    System.out.println(character.thievingExp);
                 }
                 
             }
@@ -58,6 +59,7 @@ public class Driver
     public static void main (String [] args)
     {
         Character player = new Character();
+        mainMenu(player);
 
         // run() will execute the code inside when program is closed successfully.
         Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -68,6 +70,5 @@ public class Driver
             }
         });
 
-        mainMenu(player);
     } 
 }
