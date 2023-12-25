@@ -40,8 +40,11 @@ public class Driver
                 // option 1 picked, handle the Thug pickpocket.
                 if (thug != null && getOption == 1)
                 {
-                    character.addThievingExp(thug.thievingExp);
-                    System.out.println(character.thievingExp);
+                    int thugsExp = thug.thievingExp;
+                    // add the thieving experience, then show the result of the theft.
+                    character.addThievingExp(thugsExp);
+                    character.showEarnedExperience(thugsExp);
+                    // System.out.println(character.thievingExp);
                 }
                 
             }

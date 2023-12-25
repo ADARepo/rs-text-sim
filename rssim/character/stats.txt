@@ -1,2 +1,2 @@
-thieving=30
+thieving=310
 combat=0

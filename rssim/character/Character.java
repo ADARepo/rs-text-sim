@@ -17,6 +17,7 @@ public class Character
     public int combatLevel;
     public int combatExp;
 
+    public boolean showLevelUp = false;
     public boolean validCharacter = true;
 
     public Dictionary <Integer, Integer> expLevelVal;
@@ -55,8 +56,17 @@ public class Character
     // sets the experience value for the skills in stats.txt.
     private void skillToExpNum(String skillName, int exp)
     {
-        if (skillName.equals("thieving")) this.thievingLevel = convertExpToLevel(exp);
-        else if (skillName.equals("combat")) this.combatLevel = convertExpToLevel(exp);
+        if (skillName.equals("thieving")) 
+        {
+            this.thievingLevel = convertExpToLevel(exp);
+            this.thievingExp = exp;
+        }
+        else if (skillName.equals("combat")) 
+        {
+            this.combatLevel = convertExpToLevel(exp);
+            this.combatExp = exp;
+        }
+
         // else if (skillName == "") ____Exp = exp;
         // ...
     }
@@ -116,6 +126,7 @@ public class Character
             if (this.thievingExp >= nextExp) 
             {
                 this.thievingLevel++;
+                this.showLevelUp = true;
                 return true;
             }
         }
@@ -164,5 +175,18 @@ public class Character
         ret.append("combat=" + combatExp + '\n');
 
         return ret.toString();
+    }
+
+    public void showEarnedExperience(int thugsExp)
+    {
+        String ret = (this.thievingExp - thugsExp) + " + " + thugsExp + " experience.";
+        
+        if (this.showLevelUp)
+        {
+            this.showLevelUp = false;
+            ret += "\n\nLevel up! Thieving level has increased to " + this.thievingLevel + ".";
+        }
+
+        System.out.println(ret);
     }
 }
