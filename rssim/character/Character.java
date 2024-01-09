@@ -177,9 +177,9 @@ public class Character
         return ret.toString();
     }
 
-    public void showEarnedExperience(int thugsExp)
+    public void showEarnedExperience(int thugsExp, String skill)
     {
-        String ret = (this.thievingExp - thugsExp) + " + " + thugsExp + " experience.";
+        String ret = (this.thievingExp - thugsExp) + " + " + thugsExp + " " + skill + " experience.";
         
         if (this.showLevelUp)
         {

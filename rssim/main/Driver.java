@@ -42,8 +42,9 @@ public class Driver
                 {
                     int thugsExp = thug.thievingExp;
                     // add the thieving experience, then show the result of the theft.
+                    // handle skill name later with another skill.
                     character.addThievingExp(thugsExp);
-                    character.showEarnedExperience(thugsExp);
+                    character.showEarnedExperience(thugsExp, "thieving");
                     // System.out.println(character.thievingExp);
                 }
                 
